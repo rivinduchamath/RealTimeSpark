@@ -145,13 +145,12 @@ if __name__ == "__main__":
         .add("total", StringType()) \
         .add("customer_id", StringType())
 
-    # orders_df1.writeStream.format("console").outputMode("append").start().awaitTermination()
-
     orders_df2 = orders_df1 \
         .select(from_json(col("value"), orders_schema).alias("orders"), "timestamp")
     print("SSSSSSSSSSSSSSSSSSSSSSSSSs 1")
 
     orders_df3 = orders_df2.select("orders.*", "timestamp")
+    orders_df3.printSchema()
     print("SSSSSSSSSSSSSSSSSSSSSSSSSs 2")
     orders_df3 \
         .writeStream \
